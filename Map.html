@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Map</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        var pos;
+        var map;
+        var directionsService;
+        var directionsRenderer;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: {lat: 8.50179952284133, lng: 76.94893323848251},
+                zoom: 15
+            });
+
+            var infoWindow = new google.maps.InfoWindow({map: map});
+
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent('You are here.');
+                    map.setCenter(pos);
+                }, function() {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                });
+            } else {
+                // Browser doesn't support Geolocation
+                handleLocationError(false, infoWindow, map.getCenter());
+            }
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            // Define parking icon
+            var parkingIcon = {
+                url: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
+                scaledSize: new google.maps.Size(30, 30)
+            };
+
+            // Define places  
+            var places = [
+                {lat: 8.50179952284133,  lng: 76.94893323848251, name: 'Parking Place 1'},
+                {lat: 8.503199529276177, lng: 76.94689806406748, name: 'Parking Place 2'},
+                {lat: 8.509089780819142, lng: 76.95265417417068, name: 'Parking Place 3'}, 
+                {lat: 8.466559022642244, lng: 76.95878629773006, name: 'Parking Place 4'},
+                {lat: 8.492232644361833, lng: 76.95863632375189, name: 'Parking place 5'},
+                {lat: 8.49095695391834,  lng: 76.97247322988636, name: 'Parking Place 6'},
+                {lat: 8.495837140911302, lng: 76.95766585996866, name: 'Parking Place 7'},
+                {lat: 8.503408413339386, lng: 76.96026147583017, name: 'Parking Place 8'},
+            ];
+
+            // Add markers for each place
+            places.forEach(function(place) {
+                var marker = new google.maps.Marker({
+                    position: {lat: place.lat, lng: place.lng},
+                    map: map,
+                    title: place.name,
+                    icon: parkingIcon // Use parking icon
+                });
+
+                // Add click event listener to each marker
+                marker.addListener('click', function() {
+                    calculateAndDisplayRoute(pos, place);
+                });
+            });
+        }
+
+        function calculateAndDisplayRoute(origin, destination) {
+            var request = {
+                origin: origin,
+                destination: destination,
+                travelMode: 'DRIVING'
+            };
+
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    directionsRenderer.setDirections(result);
+                }
+            });
+        }
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(browserHasGeolocation ?
+                                  'Error: The Geolocation service failed.' :
+                                  'Error: Your browser doesn\'t support geolocation.');
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"></script>
+</body>
+</html>
