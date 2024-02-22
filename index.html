@@ -56,10 +56,12 @@
             directionsRenderer.setMap(map);
 
             // Define parking icon
-            var parkingIcon = {
-                url: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
-                scaledSize: new google.maps.Size(30, 30)
-            };
+           var parkingIcon = {
+    url: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
+    scaledSize: new google.maps.Size(50, 50), // Increase the size to 50x50 pixels
+    fillColor: 'red', // Change the color to red
+    fillOpacity: 1, // Ensure the icon is fully opaque
+               };
 
             // Define places  
             var places = [
