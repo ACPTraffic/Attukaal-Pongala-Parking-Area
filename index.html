@@ -4,12 +4,12 @@
     <title>Interactive Map</title>
     <style>
         #map {
-            height: 100%; /* Adjust to fill the entire screen */
+            height: 100%;
             width: 100%;
         }
 
         html, body {
-            height: 100%; /* Ensure the HTML and body elements take up the full height of the viewport */
+            height: 100%;
             margin: 0;
             padding: 0;
         }
@@ -32,7 +32,6 @@
 
             var infoWindow = new google.maps.InfoWindow({map: map});
 
-            // Try HTML5 geolocation.
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {
                     pos = {
@@ -47,38 +46,20 @@
                     handleLocationError(true, infoWindow, map.getCenter());
                 });
             } else {
-                // Browser doesn't support Geolocation
                 handleLocationError(false, infoWindow, map.getCenter());
             }
 
             directionsService = new google.maps.DirectionsService();
             directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
-function calculateAndDisplayRoute(origin, destination) {
-    var request = {
-        origin: origin,
-        destination: destination,
-        travelMode: 'DRIVING'
-    };
 
-    directionsService.route(request, function(result, status) {
-        if (status == 'OK') {
-            directionsRenderer.setDirections(result);
-        } else {
-            window.alert('Directions request failed due to ' + status);
-        }
-    });
-}
+            var parkingIcon = {
+                url: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
+                scaledSize: new google.maps.Size(50, 50),
+                fillColor: 'red',
+                fillOpacity: 1,
+            };
 
-            // Define parking icon
-           var parkingIcon = {
-    url: 'https://maps.google.com/mapfiles/kml/shapes/parking_lot_maps.png',
-    scaledSize: new google.maps.Size(50, 50), // Increase the size to 50x50 pixels
-    fillColor: 'red', // Change the color to red
-    fillOpacity: 1, // Ensure the icon is fully opaque
-               };
-
-            // Define places  
             var places = [
                 {lat: 8.50179952284133,  lng: 76.94893323848251, name: 'Parking Place 1'},
                 {lat: 8.503199529276177, lng: 76.94689806406748, name: 'Parking Place 2'},
@@ -90,16 +71,14 @@ function calculateAndDisplayRoute(origin, destination) {
                 {lat: 8.503408413339386, lng: 76.96026147583017, name: 'Parking Place 8'},
             ];
 
-            // Add markers for each place
             places.forEach(function(place) {
                 var marker = new google.maps.Marker({
                     position: {lat: place.lat, lng: place.lng},
                     map: map,
                     title: place.name,
-                    icon: parkingIcon // Use parking icon
+                    icon: parkingIcon
                 });
 
-                // Add click event listener to each marker
                 marker.addListener('click', function() {
                     calculateAndDisplayRoute(pos, place);
                 });
@@ -116,6 +95,8 @@ function calculateAndDisplayRoute(origin, destination) {
             directionsService.route(request, function(result, status) {
                 if (status == 'OK') {
                     directionsRenderer.setDirections(result);
+                } else {
+                    window.alert('Directions request failed due to ' + status);
                 }
             });
         }
@@ -127,9 +108,6 @@ function calculateAndDisplayRoute(origin, destination) {
                                   'Error: Your browser doesn\'t support geolocation.');
         }
     </script>
-    <!-- Include the Google Maps API script -->
-     <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"></script>
 </body>
 </html>
-
-   
