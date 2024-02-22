@@ -4,8 +4,14 @@
     <title>Interactive Map</title>
     <style>
         #map {
-            height: 100%;
+            height: 100%; /* Adjust to fill the entire screen */
             width: 100%;
+        }
+
+        html, body {
+            height: 100%; /* Ensure the HTML and body elements take up the full height of the viewport */
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
@@ -104,6 +110,9 @@
                                   'Error: Your browser doesn\'t support geolocation.');
         }
     </script>
-    <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"></script>
+    <!-- Include the Google Maps API script -->
+     <script src="https://cdn.jsdelivr.net/gh/somanchiu/Keyless-Google-Maps-API@v6.6/mapsJavaScriptAPI.js"></script>
 </body>
 </html>
+
+   
