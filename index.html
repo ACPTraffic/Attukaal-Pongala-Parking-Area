@@ -116,8 +116,31 @@ places.forEach(function(place) {
         calculateAndDisplayRoute(pos, place);
     });
 });
+places.forEach(function(place) {
+    var marker = new google.maps.Marker({
+        position: {lat: place.lat, lng: place.lng},
+        map: map,
+        title: place.name,
+        icon: parkingIcon,
+        label: {
+            text: place.name,
+            color: 'red', // Set label color to red
+            fontSize: '14px',
+            fontWeight: 'bold',
+            fontFamily: 'Arial, sans-serif', // Optional: specify a font family
+            // Set label text to be wrapped
+            // Refer to documentation: https://developers.google.com/maps/documentation/javascript/markers#marker_labels
+            // Note: This feature might not work on all browsers or map applications.
+            overflow: 'hidden',
+            whiteSpace: 'nowrap',
+            textOverflow: 'clip'
+        }
+    });
 
-
+    marker.addListener('click', function() {
+        calculateAndDisplayRoute(pos, place);
+    });
+});
             places.forEach(function(place) {
                 var marker = new google.maps.Marker({
                     position: {lat: place.lat, lng: place.lng},
