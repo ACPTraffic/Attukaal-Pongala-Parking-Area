@@ -60,15 +60,63 @@
                 fillOpacity: 1,
             };
 
-            var places = [
-                {lat: 8.503199529276177, lng: 76.94689806406748, name: 'Parking Place 1'},
-                {lat: 8.466559022642244, lng: 76.95878629773006, name: 'Parking Place 2'},
-                {lat: 8.492232644361833, lng: 76.95863632375189, name: 'Parking place 3'},
-                {lat: 8.49095695391834,  lng: 76.97247322988636, name: 'Parking Place 4'},
-                {lat: 8.495837140911302, lng: 76.95766585996866, name: 'Parking Place 5'},
-                {lat: 8.503408413339386, lng: 76.96026147583017, name: 'Parking Place 6'},
-                {lat: 8.521784681147295, lng: 76.96015056546882, name: 'Parking Place 7'},
-            ];
+          var places = [
+    {lat: 8.503199529276177, lng: 76.94689806406748, name: 'University Senet Parking Ground'}, // Updated name
+    {lat: 8.466559022642244, lng: 76.95878629773006, name: 'Govt. Homoeopathic Medical College Ground Iranimuttom'}, // Updated name
+    {lat: 8.492232644361833, lng: 76.95863632375189, name: 'Music College Ground'}, // Updated name
+    {lat: 8.49095695391834,  lng: 76.97247322988636, name: 'LBS Institute Ground Poojappura'}, // Updated name
+    {lat: 8.495837140911302, lng: 76.95766585996866, name: 'Thycaud Police Parade Ground'}, // Updated name
+    {lat: 8.503408413339386, lng: 76.96026147583017, name: 'Tagore Theater Ground'}, // Updated name
+    {lat: 8.521784681147295, lng: 76.96015056546882, name: 'Salvation Army School Ground'}, // Updated name
+];
+
+places.forEach(function(place) {
+    var marker = new google.maps.Marker({
+        position: {lat: place.lat, lng: place.lng},
+        map: map,
+        title: place.name,
+        icon: parkingIcon,
+        label: {
+            text: place.name,
+            color: 'black',
+            fontSize: '14px',
+            fontWeight: 'bold'
+        }
+    });
+
+    if (place.name === 'University Senet Parking Ground') {
+        marker.setLabel('University Senet Parking Ground');
+    }
+
+    if (place.name === 'Salvation Army School Ground') {
+        marker.setLabel('Salvation Army School Ground');
+    }
+
+    if (place.name === 'Tagore Theater Ground') {
+        marker.setLabel('Tagore Theater Ground');
+    }
+
+    if (place.name === 'Thycaud Police Parade Ground') {
+        marker.setLabel('Thycaud Police Parade Ground');
+    }
+
+    if (place.name === 'Music College Ground') {
+        marker.setLabel('Music College Ground');
+    }
+
+    if (place.name === 'LBS Institute Ground Poojappura') {
+        marker.setLabel('LBS Institute Ground Poojappura');
+    }
+
+    if (place.name === 'Govt. Homoeopathic Medical College Ground Iranimuttom') {
+        marker.setLabel('Govt. Homoeopathic Medical College Ground Iranimuttom');
+    }
+
+    marker.addListener('click', function() {
+        calculateAndDisplayRoute(pos, place);
+    });
+});
+
 
             places.forEach(function(place) {
                 var marker = new google.maps.Marker({
