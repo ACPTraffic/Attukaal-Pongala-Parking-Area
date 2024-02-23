@@ -74,7 +74,6 @@ places.forEach(function(place) {
             fontFamily: 'Arial, sans-serif', // Optional: specify a font family
         }
     });
-
     marker.addListener('click', function() {
         calculateAndDisplayRoute(pos, place);
     });
@@ -86,7 +85,6 @@ places.forEach(function(place) {
                     title: place.name,
                     icon: parkingIcon
                 });
-
                 marker.addListener('click', function() {
                     calculateAndDisplayRoute(pos, place);
                 });
@@ -109,7 +107,6 @@ places.forEach(function(place) {
                 }
             });
         }
-
         function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             infoWindow.setPosition(pos);
             infoWindow.setContent(browserHasGeolocation ?
